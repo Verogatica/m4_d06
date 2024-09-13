@@ -15,7 +15,9 @@ const Cart = () => {
       <div className="row justify-content-center">
         <div className="col-8">
           <h2>Carrito de Compras</h2>
-          {cart.map((pizza) => {
+          {cart
+            .filter(pizza => pizza.cantidad > 0) 
+            .map((pizza) => {
            const ingredientesArray = pizza.ingredients || [];
 
             return (
