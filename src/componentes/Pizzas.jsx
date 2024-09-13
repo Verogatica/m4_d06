@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useContext } from 'react';
+import { MyContext } from '../mycontext/MyContext';
 
 const Pizzas = ({ datos }) => {
+    const { cart, sumaPizza } = useContext(MyContext);
+    const pizzaInCart = cart.find(pizza => pizza.id === datos.id);
+    const cantidad = pizzaInCart ? pizzaInCart.cantidad : 0;
+
   return (
     <>
     <article className="col-12 col-md-6 col-lg-4 my-4 p-3">
@@ -12,7 +17,7 @@ const Pizzas = ({ datos }) => {
           />
           <div className="card-body">
             <h4 className="card-title fw-light mb-3 fw-bold">
-              Pizza {datos.name}
+              Pizza {datos.name} {cantidad > 0 && `(${cantidad})`}
             </h4>
             <hr className="p-0"/>
             <p className="card-text h6 fw-light text-start">Ingredientes:</p>
@@ -28,12 +33,19 @@ const Pizzas = ({ datos }) => {
               </li>
             </ul>
             <div className="container d-flex justify-content-around pt-3">
-              <button type="button" className="btn btn-outline-dark">
-                Ver más 👀
-              </button>
-              <button type="button" className="btn btn-dark">
-                Añadir 🛒
-              </button>
+            <div className="container d-flex justify-content-around pt-3">
+            <button type="button" className="btn btn-outline-dark">Ver más 👀</button>
+            <button
+              onClick={() => {
+                console.log(`Adding pizza with id: ${datos.id}`);
+                sumaPizza(datos.id); 
+              }}
+              type="button"
+              className="btn btn-dark"
+            >
+              Añadir 🛒
+            </button>
+          </div>
             </div>
           </div>
         </div>
